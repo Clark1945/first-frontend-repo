@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    * { box-sizing: border-box; }
+
+    .grid {
+      display: grid;
+      /* 定義3欄，每欄平均分配 */
+      grid-template-columns: repeat(3, 1fr);
+       /* 欄與欄之間的間距 */
+      gap: 16px;
+      padding: 16px;
+    }
+
+    .card {
+      background: steelblue;
+      color: white;
+      padding: 24px;
+      border-radius: 8px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid">
+    <div class="card">Java</div>
+    <div class="card">Spring Boot</div>
+    <div class="card">React</div>
+    <div class="card">TypeScript</div>
+    <div class="card">Next.js</div>
+    <div class="card">Tailwind</div>
+  </div>
+</body>
+</html>

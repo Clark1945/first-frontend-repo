@@ -1,0 +1,27 @@
+h1 {
+  color: red;
+  font-size: 24px;
+  margin: 0;
+  padding: 16px;
+}
+
+#section1 {
+  color: blue;
+  font-size: 20px;
+  margin: 0;
+  padding: 12px;
+}
+
+#section2 {
+  color: blue;
+  font-size: 20px;
+  margin: 0;
+  padding: 12px;
+}
+
+.content {
+  font-size: 16px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 16px;
+}
