@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <input id="nameInput" placeholder="名前を入力" />
+  <button id="btn">送信</button>
+  <p id="result"></p>
+
+  <script>
+    const btn = document.querySelector("#btn");
+    const input = document.querySelector("#nameInput");
+    const result = document.querySelector("#result");
+
+    btn.addEventListener("click", () => {
+      // ここに書いてみて！
+      // 目標：input の値を取得して result に表示する
+      // 例：「こんにちは、太郎さん！」
+      result.textContent = `こんにちは、${input.value}さん！`;
+    });
+
+    const products = [
+  { id: 1, name: "MacBook", price: 200000, inStock: true },
+  { id: 2, name: "iPhone", price: 120000, inStock: false },
+  { id: 3, name: "iPad", price: 80000, inStock: true },
+  { id: 4, name: "AirPods", price: 30000, inStock: true },
+];
+    console.log(products.map(product => product.name));
+    console.log(products.filter(product => product.inStock));
+    console.log(products.find(product => product.id === 3));  // 找單一元素用 find，結果更乾淨，之後取值直接 .name 就好，不用 [0].name。
+    console.log(products.filter(product => product.inStock).map(product => product.name));
+  
+  
+
+    // Promise 就是「承諾」
+    // 有三種狀態：
+    // pending  → 還在等待
+    // fulfilled → 成功了，有結果
+    // rejected  → 失敗了，有錯誤
+
+    // ❌ 舊寫法（Promise chain，很難讀）
+    fetch("/api/users")
+    .then(res => res.json()) // 非同步的把 body stream 讀出來，並解析成 JS 物件。
+    .then(data => console.log(data))
+    .catch(err => console.log(err));
+
+    // ✅ 新寫法（async/await，像同步一樣好讀）
+    async function getUsers() {
+        const res = await fetch("/api/users");
+        const data = await res.json();
+        console.log(data);
+    }
+
+
+  </script>
+</body>
+</html>
