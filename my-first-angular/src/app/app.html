@@ -11,11 +11,7 @@
 <p>はじめてのAngular</p>
 
 <!-- app.html -->
-<ul>
-  @for (product of products; track product.id) {
-    <li>{{ product.name }} - {{ product.price }}円</li>
-  }
-</ul>
+
 
 <!-- track 是告訴 Angular「用什麼來識別每個元素」。Angular 需要知道「哪些是舊的，哪些是新的」，才能只更新有變化的部分，不用整個清單重新渲染。 track product.id 就是說：用 id 來識別每個元素 -->
 
@@ -24,7 +20,17 @@
 </button>
 
 @if (isLoggedIn) {
-  <p>ようこそ！Clark さん</p>
-} @else {
+  <ul>
+  @for (product of products; track product.id) {
+    <li>{{ product.name }} - {{ product.price }}円 - 
+      @if (product.inStock) {
+        在庫あり
+      } @else {
+        在庫なし
+      }
+      </li>  
+    }
+  </ul>
+  } @else {
   <p>ログインしてください</p>
 }

@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core'; // 從 Angular 核心引入 Component 和 signal
 import { RouterOutlet } from '@angular/router'; // 引入 Router（用來做頁面導航）
 
+import { ProductService } from './services/product'
 import { Navbar } from './components/navbar/navbar';
 
 
@@ -13,22 +14,19 @@ import { Navbar } from './components/navbar/navbar';
 export class App {
   protected readonly title = signal('Clark Liu Project'); // signal 是 Angular 21 的新狀態管理方式 類似 React 的 useState
 
-
-  products = [
-    { id: 1, name: 'MacBook', price: 200000 },
-    { id: 2, name: 'iPhone', price: 120000 },
-    { id: 3, name: 'iPad', price: 80000 },
-  ];
-
   isLoggedIn = false;
-
   toggleLogin() {
     this.isLoggedIn = !this.isLoggedIn;
   }
 
   currentPage = 'home';
-
   onMenuClicked(page: string) {
     this.currentPage = page;
+  }
+
+  products: any[] = [];
+  // 依賴注入，跟 Spring Boot 的 @Autowired 一樣
+  constructor(private productService: ProductService) {
+    this.products = this.productService.getProducts();
   }
 }
