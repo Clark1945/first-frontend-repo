@@ -1,7 +1,15 @@
 <app-navbar 
   appName="Clark Liu" 
-  (menuClicked)="onMenuClicked($event)" 
-/>
+  (menuClicked)="onMenuClicked($event)" />
+
+<nav>
+  <a routerLink="/">ホーム</a>
+  <a routerLink="/about">について</a>
+</nav>
+
+<!-- 這裡會根據路由顯示對應的 Component -->
+<router-outlet />
+
 <!-- **`(menuClicked)`** → 監聽子層發出的事件名稱
 **`onMenuClicked($event)`** → 觸發當前層（App）自己的方法
 **`$event`** → 子層 `emit()` 傳出來的值，這裡是 `'home'` 或 `'about'` -->
@@ -34,3 +42,14 @@
   } @else {
   <p>ログインしてください</p>
 }
+
+<!-- <ul>
+  @for (user of users; track user.id) {
+    <li>{{ user.name }} - {{ user.email }}</li>
+  }
+</ul> -->
+@for (user of users(); track user.id) {
+  <li>{{ user.name }} - {{ user.email }}</li>
+}
+
+<p>users count: {{ users().length }}</p>
