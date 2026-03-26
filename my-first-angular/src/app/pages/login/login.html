@@ -4,7 +4,8 @@
     <label>メールアドレス</label>
     <input type="email" formControlName="email" />
 
-    <!-- 錯誤訊息 -->
+<!--    有沒有 required 這個錯誤：-->
+<!--    .touched 使用者有沒有碰過這個欄位：-->
     @if (loginForm.get('email')?.errors?.['required'] && loginForm.get('email')?.touched) {
       <p>メールアドレスは必須です</p>
     }
@@ -25,6 +26,7 @@
     }
   </div>
 
+  <!-- Angular Property Binding ← 動態決定要不要 disabled -->
   <button type="submit" [disabled]="loginForm.invalid">ログイン</button>
 
 </form>

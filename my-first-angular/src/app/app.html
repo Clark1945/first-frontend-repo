@@ -1,55 +1,60 @@
-<app-navbar 
-  appName="Clark Liu" 
+<app-navbar
+  appName="Demo application"
   (menuClicked)="onMenuClicked($event)" />
 
 <nav>
-  <a routerLink="/">ホーム</a>
-  <a routerLink="/about">について</a>
+  <a routerLink="/">ホーム</a><span>  |  </span>
+  <a routerLink="/about">について</a><span>  |  </span>
+  <a routerLink="/login">ログイン</a>
 </nav>
 
-<!-- 這裡會根據路由顯示對應的 Component -->
-<router-outlet />
+<h1>{{ title() }}</h1>
 
 <!-- **`(menuClicked)`** → 監聽子層發出的事件名稱
 **`onMenuClicked($event)`** → 觸發當前層（App）自己的方法
 **`$event`** → 子層 `emit()` 傳出來的值，這裡是 `'home'` 或 `'about'` -->
-<p>現在のページ：{{ currentPage }}</p>
+<p>現在のページ：{{ currentPage() }}</p>
 
-<h1>{{ title() }}</h1>
-<p>はじめてのAngular</p>
-
-<!-- app.html -->
-
-
-<!-- track 是告訴 Angular「用什麼來識別每個元素」。Angular 需要知道「哪些是舊的，哪些是新的」，才能只更新有變化的部分，不用整個清單重新渲染。 track product.id 就是說：用 id 來識別每個元素 -->
+<!--1. 使用者點 <a routerLink="/about">-->
+<!--  ↓-->
+<!--  2. Angular Router 攔截這個點擊-->
+<!--  （不會真的發 HTTP 請求給伺服器）-->
+<!--  ↓-->
+<!--  3. Router 去 app.routes.ts 找對應的路由-->
+<!--  { path: 'about', component: About }-->
+<!--  ↓-->
+<!--  4. URL 變成 localhost:4200/about-->
+<!--  ↓-->
+<!--  5. <router-outlet /> 的位置換成 About component-->
+<!--  ↓-->
+<!--  6. 畫面更新，頁面沒有重新載入-->
+<!-- 這裡會根據路由顯示對應的 Component 去app.route.ts找 -->
+<router-outlet />
 
 <button (click)="toggleLogin()">
-  {{ isLoggedIn ? 'ログアウト' : 'ログイン' }}
+  {{ isLoggedIn() ? 'ログアウト' : 'ログイン' }}
 </button>
 
-@if (isLoggedIn) {
+@if (isLoggedIn()) {
   <ul>
-  @for (product of products; track product.id) {
-    <li>{{ product.name }} - {{ product.price }}円 - 
+    <h3>Product List</h3>
+    <!-- track 是告訴 Angular「用什麼來識別每個元素」。Angular 需要知道「哪些是舊的，哪些是新的」，才能只更新有變化的部分，不用整個清單重新渲染。 track product.id 就是說：用 id 來識別每個元素 -->
+    @for (product of products; track product.id) {
+    <li>{{ product.name }} - {{ product.price }}円 -
       @if (product.inStock) {
         在庫あり
       } @else {
         在庫なし
       }
-      </li>  
+      </li>
     }
+    <h3>User list</h3>
+      @for (user of users(); track user.id) {
+        <li>{{ user.name }} - {{ user.email }}</li>
+      }
   </ul>
   } @else {
   <p>ログインしてください</p>
 }
 
-<!-- <ul>
-  @for (user of users; track user.id) {
-    <li>{{ user.name }} - {{ user.email }}</li>
-  }
-</ul> -->
-@for (user of users(); track user.id) {
-  <li>{{ user.name }} - {{ user.email }}</li>
-}
 
-<p>users count: {{ users().length }}</p>
