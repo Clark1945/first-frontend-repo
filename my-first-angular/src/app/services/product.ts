@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +29,14 @@ export class ProductService {
   // Observable 是 RxJS 的一部分，用於處理非同步資料流
   getUsers(): Observable<any[]> {
     // 回傳一個 [資料流]
-    return this.http.get<any[]>(this.apiUrl);
+    return this.http.get<any[]>(this.apiUrl).pipe(
+      tap(data => console.log('原始資料: ', data)),
+      map(users => users.filter(u => u.id <= 5)),  // 只取前5個
+      catchError(err => {
+        console.error(err);
+        return of([]);
+      })
+    );
   }
 
 }
